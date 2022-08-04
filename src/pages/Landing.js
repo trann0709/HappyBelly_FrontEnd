@@ -2,7 +2,7 @@ import main1 from '../images/cooking.svg';
 import main2 from '../images/shopping.svg';
 import Logo from '../components/Logo';
 import Wrapper from '../wrappers/LandingPage';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Landing = () => {
   return (
@@ -18,7 +18,9 @@ const Landing = () => {
             veniam accusantium eligendi fugit corporis numquam inventore
             perferendis saepe laboriosam non!
           </p>
-          <button className="btn main-btn">Explore Recipes</button>
+          <Link to="/search" className="btn main-btn">
+            Explore Recipes
+          </Link>
         </div>
         <div className="img-container">
           <img src={main1} alt="cooking" className="main-img img" />
