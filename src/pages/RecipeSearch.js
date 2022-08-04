@@ -1,5 +1,7 @@
+import { Navbar } from '../components/';
+
 const RecipeSearch = () => {
-  return <div>RecipeSearch</div>;
+  return <Navbar />;
 };
 
 export default RecipeSearch;
