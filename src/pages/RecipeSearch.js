@@ -1,7 +1,12 @@
-import { Navbar } from '../components/';
+import { RecipesContainer, SearchContainer } from '../components';
 
 const RecipeSearch = () => {
-  return <Navbar />;
+  return (
+    <>
+      <SearchContainer />
+      <RecipesContainer />
+    </>
+  );
 };
 
 export default RecipeSearch;

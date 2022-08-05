@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 const Navbar = styled.nav`
+  position: sticky;
+  top: 0;
+  z-index: 1;
   height: 6rem;
   background: var(--white);
 

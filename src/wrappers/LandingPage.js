@@ -27,6 +27,8 @@ const Wrapper = styled.main`
   p {
     margin-bottom: 2rem;
     color: var(--grey-600);
+    width: 85vw;
+    max-width: 40rem;
   }
   .main-btn {
     padding: 0.875rem 1.75rem;

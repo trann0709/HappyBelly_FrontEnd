@@ -71,12 +71,6 @@ body {
   font-size: 1.05rem;
 }
 
-p {
-  width: 85vw;
-  max-width: 40rem;
-  margin-bottom: 1rem;
-}
-
 h1,
 h2,
 h3,
@@ -189,4 +183,32 @@ ul {
   width: 90vw;
   margin: 0 auto;
   max-width: var(--max-width);
+}
+
+.form {
+  background: var(--white);
+  width: 90vw;
+  max-width: var(--fixed-width);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-2);
+  margin: 3rem auto;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+.search-container {
+  border: 0.25px solid rgba(0, 0, 0, 0);
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    url('./images/background.jpg') center/cover;
+}
+
+.Toastify__toast {
+  text-transform: capitalize;
+  border-radius: var(--radius);
+  padding: 0.75rem 1.25rem;
+  width: 90vw;
+  max-width: 400px;
+  text-align: center;
 }
