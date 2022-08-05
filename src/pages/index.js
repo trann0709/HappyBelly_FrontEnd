@@ -5,6 +5,7 @@ import Register from './Register';
 import Favorites from './Favorites';
 import ShoppingList from './ShoppingList';
 import SharedLayout from './SharedLayout';
+import SingleRecipeInfo from './SingleRecipeInfo';
 
 export {
   Landing,
@@ -14,4 +15,5 @@ export {
   Favorites,
   ShoppingList,
   SharedLayout,
+  SingleRecipeInfo,
 };

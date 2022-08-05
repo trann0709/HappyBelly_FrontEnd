@@ -6,6 +6,7 @@ import {
   Favorites,
   ShoppingList,
   SharedLayout,
+  SingleRecipeInfo,
 } from './pages';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="recipes" element={<SharedLayout />}>
           <Route index element={<RecipeSearch />} />
+          <Route path=":id" element={<SingleRecipeInfo />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="shoppinglist" element={<ShoppingList />} />
         </Route>
