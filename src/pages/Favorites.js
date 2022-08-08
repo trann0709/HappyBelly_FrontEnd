@@ -1,7 +1,7 @@
 import { Loading } from '../components';
 
 const Favorites = () => {
-  return <h1>hello</h1>;
+  return <Loading />;
 };
 
 export default Favorites;

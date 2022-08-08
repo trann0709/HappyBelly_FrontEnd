@@ -16,7 +16,7 @@ const SharedLayout = () => {
 export default SharedLayout;
 
 const Wrapper = styled.main`
-  /* .full-page {
-    min-height: 100vh;
-  } */
+  .full-page {
+    min-height: calc(100vh - 6rem);
+  }
 `;

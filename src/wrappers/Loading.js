@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import background from '../images/loading.jpg';
 
 const Wrapper = styled.section`
+  height: 100%;
   min-height: calc(100vh - 6rem);
   display: grid;
   place-items: center;
