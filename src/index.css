@@ -211,4 +211,29 @@ button:disabled {
   width: 90vw;
   max-width: 400px;
   text-align: center;
+  margin: 0 auto;
+}
+
+.form-label {
+  display: block;
+  font-size: var(--smallText);
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+  letter-spacing: var(--spacing);
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius);
+  background: var(--background);
+  border: 1px solid var(--grey-200);
+}
+.form-input,
+.btn-block {
+  height: 35px;
+}
+.form-row {
+  margin-bottom: 1rem;
 }

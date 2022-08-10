@@ -40,7 +40,7 @@ const SearchContainer = () => {
       <form className="form" onSubmit={handleSubmit}>
         <input
           type="text"
-          className="form-input"
+          className="form-search"
           placeholder="what do you feel like cooking?"
           value={search}
           name="search"

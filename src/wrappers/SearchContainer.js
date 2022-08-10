@@ -7,7 +7,7 @@ const Wrapper = styled.section`
     max-width: 500px;
     position: relative;
   }
-  .form-input {
+  .form-search {
     height: 35px;
     width: 100%;
     border: transparent;
