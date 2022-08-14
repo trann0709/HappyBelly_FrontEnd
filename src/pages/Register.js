@@ -9,12 +9,13 @@ import { useSelector, useDispatch } from 'react-redux';
 const initialState = {
   username: '',
   password: '',
+  name: '',
   isMember: true,
 };
 
 const Register = () => {
   const [values, setValues] = useState(initialState);
-  const { username, password, isMember } = values;
+  const { username, password, isMember, name } = values;
   const { isLoading, user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
@@ -24,7 +25,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!username || !password) {
+    if (!username || !password || (!isMember && !name)) {
       toast.error('Please fill in all the fields');
       return;
     }
@@ -33,7 +34,7 @@ const Register = () => {
       return;
     }
 
-    dispatch(registerUser({ username, password }));
+    dispatch(registerUser({ username, password, name }));
   };
 
   const handleChange = (e) => {
@@ -49,6 +50,14 @@ const Register = () => {
           <img src={logo} alt="logo" className="logo" />
         </div>
         <h3>{isMember ? 'Login' : 'Register'}</h3>
+        {!isMember && (
+          <FormRow
+            type="text"
+            name="name"
+            value={name}
+            handleChange={handleChange}
+          />
+        )}
         <FormRow
           type="text"
           name="username"
