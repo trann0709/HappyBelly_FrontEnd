@@ -5,6 +5,7 @@ import logo from '../images/logo.svg';
 import { FormRow } from '../components';
 import { registerUser, loginUser } from '../features/user/userSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   username: '',
@@ -18,6 +19,7 @@ const Register = () => {
   const { username, password, isMember, name } = values;
   const { isLoading, user, registered } = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
@@ -26,6 +28,14 @@ const Register = () => {
   useEffect(() => {
     setValues({ ...values, isMember: !values.isMember });
   }, [registered]);
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate('/recipes');
+      }, 2000);
+    }
+  }, [user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -73,11 +83,11 @@ const Register = () => {
           value={password}
           handleChange={handleChange}
         />
-        <button type="submit" className="btn btn-block">
+        <button type="submit" className="btn btn-block" disabled={isLoading}>
           {isMember ? 'Login' : 'Register'}
         </button>
         <p>
-          {isMember ? 'Not a member yet?' : 'Already a member?'}{' '}
+          {isMember ? 'Not a member yet?' : 'Already a member?'}
           <button type="button" onClick={toggleMember} className="member-btn">
             {isMember ? 'Register' : 'Login'}
           </button>
