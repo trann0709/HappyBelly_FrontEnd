@@ -16,24 +16,27 @@ const initialState = {
 const Register = () => {
   const [values, setValues] = useState(initialState);
   const { username, password, isMember, name } = values;
-  const { isLoading, user } = useSelector((store) => store.user);
+  const { isLoading, user, registered } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
   };
 
+  useEffect(() => {
+    setValues({ ...values, isMember: !values.isMember });
+  }, [registered]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!username || !password || (!isMember && !name)) {
-      toast.error('Please fill in all the fields');
+      toast.error('Please fill out all the fields');
       return;
     }
     if (isMember) {
       dispatch(loginUser({ username, password }));
       return;
     }
-
     dispatch(registerUser({ username, password, name }));
   };
 

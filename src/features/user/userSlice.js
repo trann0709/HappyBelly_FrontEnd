@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 const initialState = {
   isLoading: false,
   user: null,
+  registered: false,
 };
 
 export const registerUser = createAsyncThunk(
