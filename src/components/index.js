@@ -4,6 +4,7 @@ import RecipesContainer from './RecipesContainer';
 import SingleRecipe from './SingleRecipe';
 import Loading from './Loading';
 import FormRow from './FormRow';
+import Sidebar from './Sidebar';
 
 export {
   Navbar,
@@ -12,4 +13,5 @@ export {
   SingleRecipe,
   Loading,
   FormRow,
+  Sidebar,
 };

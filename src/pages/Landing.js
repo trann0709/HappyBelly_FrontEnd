@@ -18,7 +18,7 @@ const Landing = () => {
             veniam accusantium eligendi fugit corporis numquam inventore
             perferendis saepe laboriosam non!
           </p>
-          <Link to="/recipes" className="btn main-btn">
+          <Link to="/main/recipes" className="btn main-btn">
             Explore Recipes
           </Link>
         </div>

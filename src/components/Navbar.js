@@ -1,10 +1,26 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import logo from '../images/logo.svg';
-import { links } from '../utils/constants';
-import { FaBars, FaUserCircle } from 'react-icons/fa';
+import { FaBars, FaCaretDown, FaUserCircle } from 'react-icons/fa';
 import Wrapper from '../wrappers/Navbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleSidebar } from '../features/user/userSlice';
+import NavLinks from './NavLinks';
 
 const Navbar = () => {
+  const { isSidebarOpen, user } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [showLogout, setShowLogout] = useState(false);
+  const toggleUser = () => {
+    setShowLogout(!showLogout);
+    if (!user) {
+      navigate('/register');
+    } else {
+      console.log('logout');
+    }
+  };
+
   return (
     <Wrapper>
       <div className="section-center nav-center">
@@ -12,23 +28,40 @@ const Navbar = () => {
           <div className="logo-container">
             <img src={logo} alt="logo" />
           </div>
-          <button type="button" className="nav-toggle">
+          <button
+            type="button"
+            className="nav-toggle"
+            onClick={() => dispatch(toggleSidebar())}
+          >
             <FaBars />
           </button>
         </div>
-        <ul className="nav-links">
-          {links.map((link) => {
-            const { id, text, url } = link;
-            return (
-              <li key={id}>
-                <Link to={url}>{text}</Link>
-              </li>
-            );
-          })}
-        </ul>
-        <button type="button" className="user-toggle">
-          <FaUserCircle />
-        </button>
+        <NavLinks />
+        <div className="btn-container">
+          <button
+            type="button"
+            className="user-toggle"
+            onClick={() => setShowLogout(!showLogout)}
+          >
+            <FaUserCircle />
+            {user?.name}
+            <FaCaretDown />
+          </button>
+          <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
+            {user && (
+              <Link
+                to="/main/profile"
+                className="settings"
+                onClick={() => setShowLogout(!showLogout)}
+              >
+                Settings
+              </Link>
+            )}
+            <button className="dropdown-btn" type="button" onClick={toggleUser}>
+              {user ? 'logout' : 'login'}
+            </button>
+          </div>
+        </div>
       </div>
     </Wrapper>
   );

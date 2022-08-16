@@ -32,7 +32,7 @@ const Register = () => {
   useEffect(() => {
     if (user) {
       setTimeout(() => {
-        navigate('/recipes');
+        navigate('/main/recipes');
       }, 2000);
     }
   }, [user]);

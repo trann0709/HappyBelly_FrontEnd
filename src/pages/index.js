@@ -6,6 +6,8 @@ import Favorites from './Favorites';
 import ShoppingList from './ShoppingList';
 import SharedLayout from './SharedLayout';
 import SingleRecipeInfo from './SingleRecipeInfo';
+import Profile from './Profile';
+import Main from './Main';
 
 export {
   Landing,
@@ -16,4 +18,6 @@ export {
   ShoppingList,
   SharedLayout,
   SingleRecipeInfo,
+  Profile,
+  Main,
 };
