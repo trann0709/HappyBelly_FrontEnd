@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import customFetch from '../../utils/axios';
 import { toast } from 'react-toastify';
 
 const initialFitlersState = {
@@ -19,13 +19,12 @@ const initialState = {
 
 export const fetchRecipes = createAsyncThunk(
   'allRecipes/fetchRecipes',
-  async (search, thunkAPI) => {
+  async ({ search, page }, thunkAPI) => {
     try {
-      const response = await axios(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`
+      const response = await customFetch.get(
+        `/recipes?search=${search}&page=${page}`
       );
-      thunkAPI.dispatch(clearInput());
-      return response.data.meals;
+      return response.data;
     } catch (error) {
       thunkAPI.rejectWithValue(error.message.data.msg);
     }
@@ -37,10 +36,14 @@ const allRecipesSlice = createSlice({
   initialState,
   reducers: {
     handleChange: (state, { payload: { name, value } }) => {
+      state.page = 1;
       state[name] = value;
     },
     clearInput: (state) => {
       return { ...state, search: '' };
+    },
+    changePage: (state, { payload }) => {
+      state.page = payload;
     },
   },
   extraReducers: {
@@ -49,13 +52,10 @@ const allRecipesSlice = createSlice({
     },
     [fetchRecipes.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      if (payload !== null) {
-        state.allFetchedRecipes = payload;
-        state.totalRecipes = payload.length;
-      } else {
-        state.allFetchedRecipes = [];
-        state.totalRecipes = 0;
-      }
+      const { numOfPages, allFetchedRecipes, totalRecipes } = payload;
+      state.allFetchedRecipes = allFetchedRecipes;
+      state.totalRecipes = totalRecipes;
+      state.numOfPages = numOfPages;
     },
     [fetchRecipes.rejected]: (state, { payload }) => {
       state.isLoading = false;
@@ -65,4 +65,4 @@ const allRecipesSlice = createSlice({
 });
 
 export default allRecipesSlice.reducer;
-export const { handleChange, clearInput } = allRecipesSlice.actions;
+export const { handleChange, clearInput, changePage } = allRecipesSlice.actions;

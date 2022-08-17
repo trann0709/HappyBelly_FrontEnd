@@ -22,6 +22,8 @@ const Wrapper = styled.aside`
     position: relative;
     height: 95vh;
     width: 80vw;
+    max-height: 700px;
+    max-width: 500px;
     background: var(--white);
     border-radius: var(--radius);
     display: flex;
@@ -42,12 +44,14 @@ const Wrapper = styled.aside`
 
   .links {
     height: calc(100vh - 15rem);
+    min-height: 300px;
     display: grid;
     grid-template-rows: auto 1fr;
     row-gap: 4rem;
     text-transform: capitalize;
+    margin: 3rem 0;
+    padding: 1rem 2rem;
     .nav-links {
-      margin-top: 5rem;
       display: flex;
       flex-direction: column;
       row-gap: 4rem;

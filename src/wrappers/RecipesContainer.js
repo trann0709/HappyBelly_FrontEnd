@@ -15,6 +15,7 @@ const Wrapper = styled.section`
     display: grid;
     column-gap: 1.5rem;
     grid-template-columns: repeat(auto-fill, minmax(338.8px, 1fr));
+    margin-bottom: 0;
   }
 `;
 

@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 const SearchContainer = () => {
-  const { isLoading, search } = useSelector((store) => store.allRecipes);
+  const { isLoading, search, page } = useSelector((store) => store.allRecipes);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -20,20 +20,19 @@ const SearchContainer = () => {
       return;
     }
     if (!isLoading) {
-      dispatch(fetchRecipes(search));
+      dispatch(fetchRecipes({ search, page }));
     }
   };
-
-  // Default recipes on initial render
-  useEffect(() => {
-    dispatch(fetchRecipes('salad'));
-  }, []);
 
   const handleSearchInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     dispatch(handleChange({ name, value }));
   };
+
+  useEffect(() => {
+    dispatch(fetchRecipes({ search, page }));
+  }, []);
 
   return (
     <Wrapper className="search-container">

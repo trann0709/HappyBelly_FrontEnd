@@ -2,11 +2,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import SingleRecipe from './SingleRecipe';
 import Loading from './Loading';
 import Wrapper from '../wrappers/RecipesContainer';
+import PageBtnContainer from './PageBtnContainer';
+import { useEffect } from 'react';
+import { fetchRecipes } from '../features/allRecipes/allRecipesSlice';
 
 const RecipesContainer = () => {
-  const { allFetchedRecipes, totalRecipes, isLoading } = useSelector(
-    (store) => store.allRecipes
-  );
+  const { allFetchedRecipes, totalRecipes, isLoading, page, search } =
+    useSelector((store) => store.allRecipes);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchRecipes({ search, page }));
+  }, [page]);
 
   if (isLoading) {
     return <Loading />;
@@ -27,9 +34,10 @@ const RecipesContainer = () => {
       </h3>
       <section className="recipes-container">
         {allFetchedRecipes.map((recipe) => {
-          return <SingleRecipe key={recipe.idMeal} {...recipe} />;
+          return <SingleRecipe key={recipe.id} {...recipe} />;
         })}
       </section>
+      {totalRecipes > 6 && <PageBtnContainer />}
     </Wrapper>
   );
 };
