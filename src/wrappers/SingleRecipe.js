@@ -54,15 +54,6 @@ const Wrapper = styled.article`
     padding: 0.2rem 1rem;
     button {
       justify-self: end;
-      background: transparent;
-      border: transparent;
-      color: #e84e58;
-      svg {
-        font-size: 1.5rem;
-      }
-      &:hover {
-        transform: scale(1.2);
-      }
     }
     .read-more {
       background: transparent;

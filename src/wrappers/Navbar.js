@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Navbar = styled.nav`
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 3;
   height: 6rem;
   background: var(--white);
 

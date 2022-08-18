@@ -15,7 +15,7 @@ const Wrapper = styled.aside`
     background: rgba(0, 0, 0, 0.7);
   }
   .show-sidebar {
-    z-index: 2;
+    z-index: 99;
     opacity: 1;
   }
   .content {

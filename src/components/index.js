@@ -5,6 +5,7 @@ import SingleRecipe from './SingleRecipe';
 import Loading from './Loading';
 import FormRow from './FormRow';
 import Sidebar from './Sidebar';
+import RecipeInfo from './RecipeInfo';
 
 export {
   Navbar,
@@ -14,4 +15,5 @@ export {
   Loading,
   FormRow,
   Sidebar,
+  RecipeInfo,
 };
