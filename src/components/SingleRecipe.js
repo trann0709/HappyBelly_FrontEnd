@@ -3,7 +3,7 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useState } from 'react';
 import Wrapper from '../wrappers/SingleRecipe';
 import { useDispatch } from 'react-redux';
-import { fetchSingleRecipe } from '../features/singleRecipe/singleRecipe';
+import { fetchSingleRecipe } from '../features/singleRecipe/singleRecipeSlice';
 
 const SingleRecipe = ({ id, category, image, name }) => {
   const dispatch = useDispatch();

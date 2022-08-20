@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FaTimes } from 'react-icons/fa';
-import { toggleSidebar } from '../features/user/userSlice';
+import { logoutUser, toggleSidebar } from '../features/user/userSlice';
 import NavLinks from './NavLinks';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Wrapper from '../wrappers/Sidebar';
@@ -13,7 +13,7 @@ const Sidebar = () => {
     if (!user) {
       navigate('/register');
     } else {
-      console.log('logout');
+      dispatch(logoutUser('Logging Out...'));
     }
   };
   const toggle = () => {

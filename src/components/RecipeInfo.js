@@ -8,18 +8,21 @@ const RecipeInfo = () => {
   const { isLoading, recipeDetails } = useSelector(
     (store) => store.singleRecipe
   );
-  const { area, category, instructions, name, image, ingredientList } =
-    recipeDetails;
   const [favorite, setFavotie] = useState(false);
+
   if (isLoading) {
     return <Loading />;
   }
+
+  const { area, category, instructions, name, image, ingredientList } =
+    recipeDetails;
+
   return (
     <Wrapper>
       <div className="recipe-info">
         <h2>{name}</h2>
-        <p>{area}</p>
-        <p>{category}</p>
+        {area && <p>{area}</p>}
+        {category && <p>{category}</p>}
         <button
           type="button"
           onClick={() => setFavotie(!favorite)}
@@ -29,7 +32,7 @@ const RecipeInfo = () => {
         </button>
       </div>
       <div className="photo-container">
-        <img src={image} alt="dish photo" className="photo" />
+        <img src={image} alt="dish" className="photo" />
       </div>
       <div className="recipe-content">
         <article className="ingredients">

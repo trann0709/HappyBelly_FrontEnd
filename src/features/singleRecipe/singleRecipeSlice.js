@@ -41,4 +41,5 @@ const singleRecipeSlice = createSlice({
   },
 });
 
+export const { updateId } = singleRecipeSlice.actions;
 export default singleRecipeSlice.reducer;

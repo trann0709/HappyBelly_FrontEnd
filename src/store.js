@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import allRecipesReducer from './features/allRecipes/allRecipesSlice';
-import singleRecipeReducer from './features/singleRecipe/singleRecipe';
+import singleRecipeReducer from './features/singleRecipe/singleRecipeSlice';
 import userReducer from './features/user/userSlice';
 
 export const store = configureStore({

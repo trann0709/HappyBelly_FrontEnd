@@ -4,7 +4,7 @@ import logo from '../images/logo.svg';
 import { FaBars, FaCaretDown, FaUserCircle } from 'react-icons/fa';
 import Wrapper from '../wrappers/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleSidebar } from '../features/user/userSlice';
+import { logoutUser, toggleSidebar } from '../features/user/userSlice';
 import NavLinks from './NavLinks';
 
 const Navbar = () => {
@@ -17,7 +17,7 @@ const Navbar = () => {
     if (!user) {
       navigate('/register');
     } else {
-      console.log('logout');
+      dispatch(logoutUser('Logging out...'));
     }
   };
 
