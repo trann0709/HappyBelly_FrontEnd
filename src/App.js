@@ -9,6 +9,7 @@ import {
   SingleRecipeInfo,
   Profile,
   Main,
+  ProtectedRoute,
 } from './pages';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -26,7 +27,14 @@ function App() {
           <Route path="recipes/:id" element={<SingleRecipeInfo />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="shoppinglist" element={<ShoppingList />} />
-          <Route path="profile" element={<Profile />} />
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         <Route path="*" element={<Error />} />
       </Routes>

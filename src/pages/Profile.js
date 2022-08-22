@@ -1,9 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import styled from 'styled-components';
 import { FormRow } from '../components';
 import { toast } from 'react-toastify';
-import { updateUser } from '../features/user/userSlice';
+import {
+  updateUser,
+  resetPassword,
+  deleteUser,
+} from '../features/user/userSlice';
+import Wrapper from '../wrappers/ProfilePage';
 
 const Profile = () => {
   const { isLoading, user } = useSelector((store) => store.user);
@@ -32,14 +36,17 @@ const Profile = () => {
     dispatch(updateUser(userData));
   };
 
-  const resetPassword = (e) => {
+  const resetPass = (e) => {
     e.preventDefault();
     if (!password) {
       toast.error('please enter the new password');
       return;
     }
-    // dispatch(resetPassword(password))
-    // log user out
+    dispatch(resetPassword({ password }));
+  };
+
+  const deleteAccount = () => {
+    dispatch(deleteUser());
   };
 
   return (
@@ -69,7 +76,7 @@ const Profile = () => {
           update change
         </button>
       </form>
-      <form className="form" onSubmit={resetPassword}>
+      <form className="form" onSubmit={resetPass}>
         <FormRow
           labelText="new password"
           type="password"
@@ -81,7 +88,12 @@ const Profile = () => {
           reset password
         </button>
       </form>
-      <button type="submit" className="btn delete-btn" disabled={isLoading}>
+      <button
+        type="submit"
+        className="btn delete-btn"
+        disabled={isLoading}
+        onClick={deleteAccount}
+      >
         delete account
       </button>
     </Wrapper>
@@ -89,29 +101,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-const Wrapper = styled.section`
-  h3 {
-    margin-top: 2rem;
-  }
-  .form {
-    padding: 2rem 3rem;
-  }
-  .update-btn {
-    margin-top: 2rem;
-    width: 100%;
-  }
-  .delete-btn {
-    width: 15rem;
-    height: 3rem;
-    display: block;
-    margin: 4rem auto;
-    border: 2px solid var(--grey-100);
-    color: var(--grey-400);
-    background: transparent;
-    &:hover {
-      background: var(--primary-600);
-      color: var(--grey-100);
-    }
-  }
-`;

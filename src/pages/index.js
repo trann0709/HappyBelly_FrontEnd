@@ -8,6 +8,7 @@ import SharedLayout from './SharedLayout';
 import SingleRecipeInfo from './SingleRecipeInfo';
 import Profile from './Profile';
 import Main from './Main';
+import ProtectedRoute from './ProtectedRoute';
 
 export {
   Landing,
@@ -20,4 +21,5 @@ export {
   SingleRecipeInfo,
   Profile,
   Main,
+  ProtectedRoute,
 };

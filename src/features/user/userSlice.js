@@ -7,8 +7,11 @@ import {
   removeUserFromLocalStorage,
 } from '../../utils/localStorage';
 import {
+  deleteUserThunk,
   loginUserThunk,
+  logoutUserThunk,
   registerUserThunk,
+  resetPasswordThunk,
   updateUserThunk,
 } from './userThunk';
 
@@ -43,17 +46,20 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-// export const deleteUser = createAsyncThunk(
-//   'user/deleteUser',
-//   async (user, thunkAPI) => {
-//     try {
-//       const resp = await customFetch.patch('/delete_user', user);
-//       // log the user out ???
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.response.data.msg);
-//     }
-//   }
-// );
+export const resetPassword = createAsyncThunk(
+  'user/resetPassword',
+  (password, thunkAPI) => {
+    return resetPasswordThunk('/reset_password', password, thunkAPI);
+  }
+);
+
+export const logoutUser = createAsyncThunk('user/logoutUser', (thunkAPI) => {
+  return logoutUserThunk('/logout', thunkAPI);
+});
+
+export const deleteUser = createAsyncThunk('user/deleteUser', (thunkAPI) => {
+  return deleteUserThunk('/delete_user', thunkAPI);
+});
 
 const userSlice = createSlice({
   name: 'user',
@@ -61,14 +67,6 @@ const userSlice = createSlice({
   reducers: {
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
-    },
-    logoutUser: (state, { payload }) => {
-      state.isSidebarOpen = false;
-      state.user = null;
-      removeUserFromLocalStorage();
-      if (payload) {
-        toast.success(payload);
-      }
     },
   },
   extraReducers: {
@@ -118,22 +116,46 @@ const userSlice = createSlice({
       state.isLoading = false;
       toast.error(payload);
     },
-    // [deleteUser.pending]: (state) => {
-    //   state.isLoading = true;
-    // },
-    // [deleteUser.fulfilled]: (state, { payload }) => {
-    //   state.isLoading = false;
-    //   const { user } = payload;
-    //   // remove everything
-    //   removeUserFromLocalStorage(user);
-    //   toast.success('User Deleted!');
-    // },
-    // [deleteUser.rejected]: (state, { payload }) => {
-    //   state.isLoading = false;
-    //   toast.error(payload);
-    // },
+    [resetPassword.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [resetPassword.fulfilled]: (state) => {
+      state.isLoading = false;
+    },
+    [resetPassword.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
+    [logoutUser.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [logoutUser.fulfilled]: (state) => {
+      state.isLoading = false;
+      state.user = null;
+      state.isSidebarOpen = false;
+      removeUserFromLocalStorage();
+    },
+    [logoutUser.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
+    [deleteUser.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteUser.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.user = null;
+      state.isSidebarOpen = false;
+      removeUserFromLocalStorage();
+      toast.success(payload);
+      // remove everything
+    },
+    [deleteUser.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
   },
 });
 
 export default userSlice.reducer;
-export const { toggleSidebar, logoutUser } = userSlice.actions;
+export const { toggleSidebar } = userSlice.actions;
