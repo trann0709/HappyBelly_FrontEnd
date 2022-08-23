@@ -242,6 +242,7 @@ button:disabled {
   background: transparent;
   border: transparent;
   color: #e84e58;
+  cursor: pointer;
 }
 
 .favorite-btn svg {
