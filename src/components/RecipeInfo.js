@@ -1,5 +1,6 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Loading } from '../components';
+import { addToList } from '../features/shoppingList/shoppingListSlice';
 import Wrapper from '../wrappers/RecipeInfo';
 import FavoriteButton from './FavoriteButton';
 
@@ -7,6 +8,7 @@ const RecipeInfo = () => {
   const { isLoading, recipeDetails } = useSelector(
     (store) => store.singleRecipe
   );
+  const dispatch = useDispatch();
 
   if (isLoading) {
     return <Loading />;
@@ -33,7 +35,11 @@ const RecipeInfo = () => {
             {ingredientList.map((item, index) => {
               return <p key={index}>{item}</p>;
             })}
-            <button type="button" className="btn list-btn">
+            <button
+              type="button"
+              className="btn list-btn"
+              onClick={() => dispatch(addToList({ id, name, ingredientList }))}
+            >
               add to list
             </button>
           </div>

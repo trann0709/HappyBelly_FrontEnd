@@ -26,7 +26,7 @@ function App() {
           <Route path="recipes" element={<RecipeSearch />} />
           <Route path="recipes/:id" element={<SingleRecipeInfo />} />
           <Route path="favorites" element={<Favorites />} />
-          <Route path="shoppinglist" element={<ShoppingList />} />
+          <Route path="grocerylist" element={<ShoppingList />} />
           <Route
             path="profile"
             element={

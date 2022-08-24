@@ -11,7 +11,7 @@ export const links = [
   },
   {
     id: 3,
-    text: 'shopping list',
-    url: '/main/shoppinglist',
+    text: 'grocery list',
+    url: '/main/grocerylist',
   },
 ];

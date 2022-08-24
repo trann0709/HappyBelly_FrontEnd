@@ -3,6 +3,7 @@ import allRecipesReducer from './features/allRecipes/allRecipesSlice';
 import singleRecipeReducer from './features/singleRecipe/singleRecipeSlice';
 import userReducer from './features/user/userSlice';
 import favoriteListReducer from './features/favoriteList/favoriteListSlice';
+import shoppingListReducer from './features/shoppingList/shoppingListSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     user: userReducer,
     singleRecipe: singleRecipeReducer,
     favoriteList: favoriteListReducer,
+    shoppingList: shoppingListReducer,
   },
 });

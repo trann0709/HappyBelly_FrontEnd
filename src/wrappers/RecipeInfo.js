@@ -68,6 +68,9 @@ const Wrapper = styled.section`
         border-bottom-right-radius: var(--radius);
         padding: 0.75rem 1rem;
         position: relative;
+        p {
+          text-transform: capitalize;
+        }
         .list-btn {
           position: absolute;
           bottom: -1.75rem;
