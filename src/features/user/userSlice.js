@@ -7,6 +7,7 @@ import {
   removeUserFromLocalStorage,
 } from '../../utils/localStorage';
 import {
+  clearStoreThunk,
   deleteUserThunk,
   loginUserThunk,
   logoutUserThunk,
@@ -20,9 +21,6 @@ const initialState = {
   user: getUserFromLocalStorage(),
   registered: false,
   isSidebarOpen: false,
-  // should these two be part of user
-  // favoriteList: [],
-  // shoppingList: [],
 };
 
 export const registerUser = createAsyncThunk(
@@ -60,6 +58,8 @@ export const logoutUser = createAsyncThunk('user/logoutUser', (thunkAPI) => {
 export const deleteUser = createAsyncThunk('user/deleteUser', (thunkAPI) => {
   return deleteUserThunk('/delete_user', thunkAPI);
 });
+
+export const clearStore = createAsyncThunk('user/clearStore', clearStoreThunk);
 
 const userSlice = createSlice({
   name: 'user',
@@ -153,6 +153,9 @@ const userSlice = createSlice({
     [deleteUser.rejected]: (state, { payload }) => {
       state.isLoading = false;
       toast.error(payload);
+    },
+    [clearStore.rejected]: () => {
+      toast.error('There was an error');
     },
   },
 });

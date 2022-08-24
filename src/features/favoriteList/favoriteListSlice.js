@@ -1,56 +1,58 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import customFetch from '../../utils/axios';
+import customFetch, { checkForUnauthorizedResponse } from '../../utils/axios';
 import { toast } from 'react-toastify';
-
-const initialFitlersState = {
-  search: '',
-  sort: 'a-z',
-  sortOptions: ['a-z', 'z-a'],
-};
 
 const initialState = {
   isLoading: false,
   favoriteList: [],
+  idList: [],
   totalRecipes: 0,
   numOfPages: 1,
   page: 1,
-  ...initialFitlersState,
+  sort: 'a-z',
+  sortOptions: ['a-z', 'z-a'],
 };
 
-// export const fetchRecipes = createAsyncThunk(
-//   'allRecipes/fetchRecipes',
-//   async ({ search, page }, thunkAPI) => {
-//     try {
-//       const response = await customFetch.get(
-//         `/recipes?search=${search}&page=${page}`
-//       );
-//       return response.data;
-//     } catch (error) {
-//       thunkAPI.rejectWithValue(error.message.data.msg);
-//     }
-//   }
-// );
+export const fetchFavorite = createAsyncThunk(
+  'favoriteList/fetchFavorite',
+  async (thunkAPI, sort) => {
+    try {
+      const response = await customFetch.get(`/favorite?sort=${sort}`);
+      return response.data;
+    } catch (error) {
+      return checkForUnauthorizedResponse(error, thunkAPI);
+    }
+  }
+);
 
 export const addFavorite = createAsyncThunk(
   'favoriteList/addFavorite',
   async (recipe, thunkAPI) => {
     try {
       const resp = await customFetch.post('/add_favorite', recipe);
+      // updating the list after adding a recipe
+      if (resp.status === 200) {
+        thunkAPI.dispatch(fetchFavorite('a-z'));
+      }
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg);
+      return checkForUnauthorizedResponse(error, thunkAPI);
     }
   }
 );
 
 export const removeFavorite = createAsyncThunk(
   'favoriteList/removeFavorite',
-  async (recipe, thunkAPI) => {
+  async (recipe_id, thunkAPI) => {
     try {
-      const resp = await customFetch.delete('/remove_favorite', recipe);
+      const resp = await customFetch.delete(`/remove_favorite/${recipe_id}`);
+      // update favorite list after removing a recipe
+      if (resp.status === 200) {
+        thunkAPI.dispatch(fetchFavorite('a-z'));
+      }
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg);
+      return checkForUnauthorizedResponse(error, thunkAPI);
     }
   }
 );
@@ -71,26 +73,26 @@ const favoriteListSlice = createSlice({
   //   },
   // },
   extraReducers: {
-    // [fetchRecipes.pending]: (state) => {
-    //   state.isLoading = true;
-    // },
-    // [fetchRecipes.fulfilled]: (state, { payload }) => {
-    //   state.isLoading = false;
-    //   const { numOfPages, allFetchedRecipes, totalRecipes } = payload;
-    //   state.allFetchedRecipes = allFetchedRecipes;
-    //   state.totalRecipes = totalRecipes;
-    //   state.numOfPages = numOfPages;
-    // },
-    // [fetchRecipes.rejected]: (state, { payload }) => {
-    //   state.isLoading = false;
-    //   toast.error(payload);
-    // },
+    [fetchFavorite.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [fetchFavorite.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      const { favoriteList, totalRecipes, idList } = payload;
+      state.favoriteList = favoriteList;
+      state.totalRecipes = totalRecipes;
+      state.idList = idList;
+    },
+    [fetchFavorite.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
     [addFavorite.pending]: (state) => {
       state.isLoading = true;
     },
-    [addFavorite.fulfilled]: (state, { payload }) => {
+    [addFavorite.fulfilled]: (state, { payload: { msg } }) => {
       state.isLoading = false;
-      toast.success(payload);
+      toast.success(msg);
     },
     [addFavorite.rejected]: (state, { payload }) => {
       state.isLoading = false;
@@ -99,9 +101,9 @@ const favoriteListSlice = createSlice({
     [removeFavorite.pending]: (state) => {
       state.isLoading = true;
     },
-    [removeFavorite.fulfilled]: (state, { payload }) => {
+    [removeFavorite.fulfilled]: (state, { payload: { msg } }) => {
       state.isLoading = false;
-      toast.success(payload);
+      toast.success(msg);
     },
     [removeFavorite.rejected]: (state, { payload }) => {
       state.isLoading = false;

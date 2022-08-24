@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Wrapper from '../wrappers/SingleRecipe';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSingleRecipe } from '../features/singleRecipe/singleRecipeSlice';
@@ -8,19 +8,24 @@ import {
   addFavorite,
   removeFavorite,
 } from '../features/favoriteList/favoriteListSlice';
-import { toast } from 'react-toastify';
 
 const SingleRecipe = ({ id, category, image, name }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.user);
-  const { isLoading } = useSelector((store) => store.favoriteList);
+  const { isLoading, idList } = useSelector((store) => store.favoriteList);
 
   // get the favoritelist and check if the recipe is marked, update properly.
   const [favorite, setFavorite] = useState(false);
+
+  useEffect(() => {
+    if (idList.includes(id)) {
+      setFavorite(true);
+    }
+  }, []);
+
   const toggleFavorite = () => {
     if (!user) {
-      toast.warning('please log in to continue');
       navigate('/register');
     } else {
       setFavorite(!favorite);
@@ -29,10 +34,11 @@ const SingleRecipe = ({ id, category, image, name }) => {
       dispatch(addFavorite({ id, category, image, name }));
       return;
     } else {
-      dispatch(removeFavorite({ id }));
+      dispatch(removeFavorite(id));
       return;
     }
   };
+
   return (
     <Wrapper>
       <img src={image} alt="food" className="photo" />

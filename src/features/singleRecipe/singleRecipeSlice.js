@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import customFetch from '../../utils/axios';
+import customFetch, { checkForUnauthorizedResponse } from '../../utils/axios';
 import { toast } from 'react-toastify';
 
 const initialState = {
@@ -17,7 +17,7 @@ export const fetchSingleRecipe = createAsyncThunk(
       }
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message.data.msg);
+      return checkForUnauthorizedResponse(error, thunkAPI);
     }
   }
 );

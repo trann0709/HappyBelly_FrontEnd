@@ -1,20 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import customFetch from '../../utils/axios';
+import customFetch, { checkForUnauthorizedResponse } from '../../utils/axios';
 import { toast } from 'react-toastify';
-
-const initialFitlersState = {
-  search: '',
-  sort: 'a-z',
-  sortOptions: ['a-z', 'z-a'],
-};
 
 const initialState = {
   isLoading: false,
+  search: '',
   allFetchedRecipes: [],
   totalRecipes: 0,
   numOfPages: 1,
   page: 1,
-  ...initialFitlersState,
 };
 
 export const fetchRecipes = createAsyncThunk(
@@ -26,7 +20,7 @@ export const fetchRecipes = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error.message.data.msg);
+      return checkForUnauthorizedResponse(error, thunkAPI);
     }
   }
 );

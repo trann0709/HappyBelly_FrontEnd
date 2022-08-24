@@ -8,6 +8,7 @@ const RecipeInfo = () => {
   const { isLoading, recipeDetails } = useSelector(
     (store) => store.singleRecipe
   );
+
   const [favorite, setFavotie] = useState(false);
 
   if (isLoading) {
