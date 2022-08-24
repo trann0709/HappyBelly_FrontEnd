@@ -27,6 +27,7 @@ const RecipesContainer = () => {
       </Wrapper>
     );
   }
+
   return (
     <Wrapper className="section-center">
       <h3>

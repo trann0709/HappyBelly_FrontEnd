@@ -18,9 +18,12 @@ const FavoriteButton = ({ id, category, image, name }) => {
       setFavorite(true);
     }
   }, [idList]);
-  const toggleFavorite = () => {
-    setFavorite(!favorite);
 
+  const toggleFavorite = () => {
+    if (!user) {
+      navigate('/register');
+    }
+    setFavorite(!favorite);
     if (!favorite) {
       dispatch(addFavorite({ id, category, image, name }));
       return;
@@ -29,10 +32,11 @@ const FavoriteButton = ({ id, category, image, name }) => {
       return;
     }
   };
+
   return (
     <button
       type="button"
-      onClick={user ? toggleFavorite : navigate('/register')}
+      onClick={toggleFavorite}
       className="favorite-btn"
       disabled={isLoading}
     >

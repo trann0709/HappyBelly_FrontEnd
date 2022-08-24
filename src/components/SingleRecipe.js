@@ -1,43 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Wrapper from '../wrappers/SingleRecipe';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchSingleRecipe } from '../features/singleRecipe/singleRecipeSlice';
-import {
-  addFavorite,
-  removeFavorite,
-} from '../features/favoriteList/favoriteListSlice';
+import FavoriteButton from './FavoriteButton';
 
 const SingleRecipe = ({ id, category, image, name }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user } = useSelector((store) => store.user);
-  const { isLoading, idList } = useSelector((store) => store.favoriteList);
-
-  // get the favoritelist and check if the recipe is marked, update properly.
-  const [favorite, setFavorite] = useState(false);
-
-  useEffect(() => {
-    if (idList.includes(id)) {
-      setFavorite(true);
-    }
-  }, []);
-
-  const toggleFavorite = () => {
-    if (!user) {
-      navigate('/register');
-    } else {
-      setFavorite(!favorite);
-    }
-    if (!favorite) {
-      dispatch(addFavorite({ id, category, image, name }));
-      return;
-    } else {
-      dispatch(removeFavorite(id));
-      return;
-    }
-  };
 
   return (
     <Wrapper>
@@ -54,14 +22,7 @@ const SingleRecipe = ({ id, category, image, name }) => {
         >
           Check out
         </Link>
-        <button
-          type="button"
-          onClick={toggleFavorite}
-          className="favorite-btn"
-          disabled={isLoading}
-        >
-          {favorite ? <FaHeart /> : <FaRegHeart />}
-        </button>
+        <FavoriteButton id={id} category={category} image={image} name={name} />
       </footer>
     </Wrapper>
   );

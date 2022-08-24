@@ -63,7 +63,7 @@ export const deleteUserThunk = async (url, thunkAPI) => {
   }
 };
 
-export const clearStoreThunk = async (message, thunkAPI) => {
+export const clearStoreThunk = async (thunkAPI) => {
   try {
     thunkAPI.dispatch(logoutUser());
     return Promise.resolve();

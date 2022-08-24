@@ -17,6 +17,28 @@ const Wrapper = styled.section`
     grid-template-columns: repeat(auto-fill, minmax(338.8px, 1fr));
     margin-bottom: 0;
   }
+  .user {
+    .non-user {
+      text-align: center;
+      .link {
+      color: var(--primary-200);
+      &:hover {
+        color: var(--primary-400);
+      }
+    }
+    }
+  }
+  .btn-back {
+    width: 50vw;
+    max-width: 250px;
+    margin: 1.5rem auto;
+    border: 2px solid var(--grey-100);
+    color: var(--grey-400);
+    background: transparent;
+    &:hover {
+      background: var(--primary-600);
+      color: var(--grey-100);
+    }
 `;
 
 export default Wrapper;
