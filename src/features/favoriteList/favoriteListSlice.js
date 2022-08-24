@@ -15,9 +15,11 @@ const initialState = {
 
 export const fetchFavorite = createAsyncThunk(
   'favoriteList/fetchFavorite',
-  async (thunkAPI, sort) => {
+  async ({ sort, page }, thunkAPI) => {
     try {
-      const response = await customFetch.get(`/favorite?sort=${sort}`);
+      const response = await customFetch.get(
+        `/favorite?sort=${sort}&page=${page}`
+      );
       return response.data;
     } catch (error) {
       return checkForUnauthorizedResponse(error, thunkAPI);
@@ -32,7 +34,8 @@ export const addFavorite = createAsyncThunk(
       const resp = await customFetch.post('/add_favorite', recipe);
       // updating the list after adding a recipe
       if (resp.status === 200) {
-        thunkAPI.dispatch(fetchFavorite('a-z'));
+        const { sort, page } = thunkAPI.getState().favoriteList;
+        thunkAPI.dispatch(fetchFavorite({ sort, page }));
       }
       return resp.data;
     } catch (error) {
@@ -48,7 +51,8 @@ export const removeFavorite = createAsyncThunk(
       const resp = await customFetch.delete(`/remove_favorite/${recipe_id}`);
       // update favorite list after removing a recipe
       if (resp.status === 200) {
-        thunkAPI.dispatch(fetchFavorite('a-z'));
+        const { sort, page } = thunkAPI.getState().favoriteList;
+        thunkAPI.dispatch(fetchFavorite({ sort, page }));
       }
       return resp.data;
     } catch (error) {
@@ -60,28 +64,29 @@ export const removeFavorite = createAsyncThunk(
 const favoriteListSlice = createSlice({
   name: 'favoriteList',
   initialState,
-  // reducers: {
-  //   handleChange: (state, { payload: { name, value } }) => {
-  //     state.page = 1;
-  //     state[name] = value;
-  //   },
-  //   clearInput: (state) => {
-  //     return { ...state, search: '' };
-  //   },
-  //   changePage: (state, { payload }) => {
-  //     state.page = payload;
-  //   },
-  // },
+  reducers: {
+    // handleChange: (state, { payload: { name, value } }) => {
+    //   state.page = 1;
+    //   state[name] = value;
+    // },
+    // clearInput: (state) => {
+    //   return { ...state, search: '' };
+    // },
+    changePage: (state, { payload }) => {
+      state.page = payload;
+    },
+  },
   extraReducers: {
     [fetchFavorite.pending]: (state) => {
       state.isLoading = true;
     },
     [fetchFavorite.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      const { favoriteList, totalRecipes, idList } = payload;
+      const { favoriteList, totalRecipes, idList, numOfPages } = payload;
       state.favoriteList = favoriteList;
       state.totalRecipes = totalRecipes;
       state.idList = idList;
+      state.numOfPages = numOfPages;
     },
     [fetchFavorite.rejected]: (state, { payload }) => {
       state.isLoading = false;
@@ -103,6 +108,8 @@ const favoriteListSlice = createSlice({
     },
     [removeFavorite.fulfilled]: (state, { payload: { msg } }) => {
       state.isLoading = false;
+      // reset the page??
+      state.page = 1;
       toast.success(msg);
     },
     [removeFavorite.rejected]: (state, { payload }) => {
@@ -113,4 +120,4 @@ const favoriteListSlice = createSlice({
 });
 
 export default favoriteListSlice.reducer;
-// export const { handleChange, clearInput, changePage } = allRecipesSlice.actions;
+export const { changePage } = favoriteListSlice.actions;

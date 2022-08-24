@@ -4,11 +4,20 @@ import Loading from './Loading';
 import Wrapper from '../wrappers/RecipesContainer';
 import PageBtnContainer from './PageBtnContainer';
 import { useEffect } from 'react';
-import { fetchRecipes } from '../features/allRecipes/allRecipesSlice';
+import {
+  fetchRecipes,
+  changePage,
+} from '../features/allRecipes/allRecipesSlice';
 
 const RecipesContainer = () => {
-  const { allFetchedRecipes, totalRecipes, isLoading, page, search } =
-    useSelector((store) => store.allRecipes);
+  const {
+    allFetchedRecipes,
+    totalRecipes,
+    isLoading,
+    page,
+    search,
+    numOfPages,
+  } = useSelector((store) => store.allRecipes);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,7 +47,13 @@ const RecipesContainer = () => {
           return <SingleRecipe key={recipe.id} {...recipe} />;
         })}
       </section>
-      {totalRecipes > 6 && <PageBtnContainer />}
+      {totalRecipes > 6 && (
+        <PageBtnContainer
+          page={page}
+          numOfPages={numOfPages}
+          changePage={changePage}
+        />
+      )}
     </Wrapper>
   );
 };

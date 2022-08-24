@@ -1,10 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
-import { changePage } from '../features/allRecipes/allRecipesSlice';
 import Wrapper from '../wrappers/PageBtnContainer';
 
-const PageBtnContainer = () => {
-  const { page, numOfPages } = useSelector((store) => store.allRecipes);
+const PageBtnContainer = ({ page, numOfPages, changePage }) => {
   const dispatch = useDispatch();
 
   const pages = Array.from({ length: numOfPages }, (_, index) => {

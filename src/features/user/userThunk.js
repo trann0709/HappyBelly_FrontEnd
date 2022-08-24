@@ -7,15 +7,16 @@ export const registerUserThunk = async (url, user, thunkAPI) => {
   try {
     const resp = await customFetch.post(url, user);
     return resp.data;
-  } catch (error) {}
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
 };
 
 export const loginUserThunk = async (url, user, thunkAPI) => {
   try {
     const resp = await customFetch.post(url, user);
-    if (resp.status === 200) {
-      thunkAPI.dispatch(fetchFavorite('a-z'));
-    }
+    const { sort, page } = thunkAPI.getState().favoriteList;
+    thunkAPI.dispatch(fetchFavorite({ sort, page }));
     return resp.data;
   } catch (error) {
     return checkForUnauthorizedResponse(error, thunkAPI);

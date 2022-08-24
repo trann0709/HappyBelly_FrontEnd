@@ -1,13 +1,26 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Loading, SingleRecipe } from '../components';
 import { Link } from 'react-router-dom';
 import Wrapper from '../wrappers/RecipesContainer';
+import PageBtnContainer from '../components/PageBtnContainer';
+import {
+  changePage,
+  fetchFavorite,
+} from '../features/favoriteList/favoriteListSlice';
+import { useEffect } from 'react';
 
 const Favorites = () => {
-  const { isLoading, favoriteList, totalRecipes } = useSelector(
-    (store) => store.favoriteList
-  );
+  const { isLoading, favoriteList, totalRecipes, page, numOfPages, sort } =
+    useSelector((store) => store.favoriteList);
   const { user } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchFavorite({ sort, page }));
+      return;
+    }
+  }, [sort, page]);
 
   if (isLoading) {
     return <Loading />;
@@ -36,6 +49,13 @@ const Favorites = () => {
             return <SingleRecipe key={recipe.id} {...recipe} />;
           })}
       </section>
+      {totalRecipes > 6 && (
+        <PageBtnContainer
+          page={page}
+          numOfPages={numOfPages}
+          changePage={changePage}
+        />
+      )}
       <Link to="/main/recipes" className="btn btn-back">
         back to search
       </Link>
