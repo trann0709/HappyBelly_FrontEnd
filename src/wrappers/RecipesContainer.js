@@ -28,6 +28,25 @@ const Wrapper = styled.section`
     }
     }
   }
+  .filter {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+      margin: 0;
+    }
+    .form-select {
+      text-transform: uppercase;
+      text-align: right;
+      border: none;
+      padding: 0;
+      color: var(--grey-100);
+      letter-spacing: 0.5rem;
+      font-weight: 700;
+    }
+  }
   .btn-back {
     width: 50vw;
     max-width: 250px;

@@ -1,17 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Loading, SingleRecipe } from '../components';
+import { FormRowSelect, Loading, SingleRecipe } from '../components';
 import { Link } from 'react-router-dom';
 import Wrapper from '../wrappers/RecipesContainer';
 import PageBtnContainer from '../components/PageBtnContainer';
 import {
   changePage,
   fetchFavorite,
+  handleSort,
 } from '../features/favoriteList/favoriteListSlice';
 import { useEffect } from 'react';
 
 const Favorites = () => {
-  const { isLoading, favoriteList, totalRecipes, page, numOfPages, sort } =
-    useSelector((store) => store.favoriteList);
+  const {
+    isLoading,
+    favoriteList,
+    totalRecipes,
+    page,
+    numOfPages,
+    sort,
+    sortOptions,
+  } = useSelector((store) => store.favoriteList);
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
@@ -26,13 +34,30 @@ const Favorites = () => {
     return <Loading />;
   }
 
+  const handleChange = (e) => {
+    if (isLoading) {
+      return;
+    }
+    const name = e.target.name;
+    const value = e.target.value;
+    dispatch(handleSort({ name, value }));
+  };
+
   return (
     <Wrapper className="section-center">
       <div className="user">
         {user ? (
-          <h3>
-            {totalRecipes} {totalRecipes > 1 ? 'Recipes' : 'Recipe'} saved
-          </h3>
+          <div className="filter">
+            <h3>
+              {totalRecipes} {totalRecipes > 1 ? 'Recipes' : 'Recipe'} saved
+            </h3>
+            <FormRowSelect
+              name="sort"
+              value={sort}
+              list={sortOptions}
+              handleChange={handleChange}
+            />
+          </div>
         ) : (
           <h3 className="non-user">
             Please{' '}

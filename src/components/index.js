@@ -6,8 +6,10 @@ import Loading from './Loading';
 import FormRow from './FormRow';
 import Sidebar from './Sidebar';
 import RecipeInfo from './RecipeInfo';
+import FormRowSelect from './FormRowSelect';
 
 export {
+  FormRowSelect,
   Navbar,
   SearchContainer,
   RecipesContainer,

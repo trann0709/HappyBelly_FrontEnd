@@ -65,13 +65,10 @@ const favoriteListSlice = createSlice({
   name: 'favoriteList',
   initialState,
   reducers: {
-    // handleChange: (state, { payload: { name, value } }) => {
-    //   state.page = 1;
-    //   state[name] = value;
-    // },
-    // clearInput: (state) => {
-    //   return { ...state, search: '' };
-    // },
+    handleSort: (state, { payload: { name, value } }) => {
+      state.page = 1;
+      state[name] = value;
+    },
     changePage: (state, { payload }) => {
       state.page = payload;
     },
@@ -120,4 +117,4 @@ const favoriteListSlice = createSlice({
 });
 
 export default favoriteListSlice.reducer;
-export const { changePage } = favoriteListSlice.actions;
+export const { changePage, handleSort } = favoriteListSlice.actions;
