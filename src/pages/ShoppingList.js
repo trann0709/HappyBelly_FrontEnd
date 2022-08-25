@@ -25,7 +25,7 @@ const ShoppingList = () => {
       dispatch(fetchList());
       return;
     }
-  });
+  }, []);
 
   return (
     <Wrapper className="section-center">
