@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 const initialState = {
   isLoading: false,
   shoppingList: [],
+  names: [],
 };
 
 export const addToList = createAsyncThunk(
@@ -25,7 +26,10 @@ export const deleteFromList = createAsyncThunk(
   'shoppingList/deleteFromList',
   async (item, thunkAPI) => {
     try {
-      const resp = await customFetch.post('/delete_item', item);
+      const { id, ingredient } = item;
+      const resp = await customFetch.delete(
+        `/delete_item?id=${id}&ingredient=${ingredient}`
+      );
       // update the list
       thunkAPI.dispatch(fetchList());
       return resp.data;
@@ -78,8 +82,10 @@ const shoppingListSlice = createSlice({
       state.isLoading = false;
     },
     [fetchList.fulfilled]: (state, { payload }) => {
+      const { shoppingList, names } = payload;
       state.isLoading = false;
-      state.shoppingList = payload;
+      state.shoppingList = shoppingList;
+      state.names = names;
     },
     [fetchList.rejected]: (state, { payload }) => {
       state.isLoading = false;
@@ -102,6 +108,7 @@ const shoppingListSlice = createSlice({
     [deleteList.fulfilled]: (state, { payload: { msg } }) => {
       state.isLoading = false;
       state.shoppingList = [];
+      state.names = [];
       toast.success(msg);
     },
     [deleteList.rejected]: (state, { payload }) => {

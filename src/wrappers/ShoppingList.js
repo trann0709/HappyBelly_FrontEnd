@@ -20,6 +20,7 @@ const Wrapper = styled.section`
     grid-template-columns: 1fr;
     row-gap: 0.5rem;
     padding: 2rem 3rem;
+    box-shadow: var(--shadow-3);
     .clear-btn {
       margin-bottom: 2rem;
       margin-top: 0.5rem;
@@ -30,8 +31,43 @@ const Wrapper = styled.section`
     font-size: 2rem;
     letter-spacing: var(--spacing);
     padding-top: 2rem;
-  }
+    }
+    .form-control {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      margin-bottom: 1rem;
+      .custom {
+        padding: 0.35rem;
+        padding-left: 1rem;
+        font-size: 1.05rem;
+        border: 2px solid var(--grey-200);
+        border-top-left-radius: var(--radius);
+        border-bottom-left-radius: var(--radius);
+        border-right: transparent;
+      }
+      .submit-btn {
+        border-radius: 0;
+        border-top-right-radius: var(--radius);
+        border-bottom-right-radius: var(--radius);
+        border: 2px solid var(--grey-200);
+        border-left: transparent;
+        background-color: var(--primary-800);
+        color: var(--grey-100);
+        box-shadow: none;
+        &:hover{
+          background-color: var(--primary-600);
+        }
+      }
+    }
     .list-container {
+      h4 {
+        text-align: left;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        background: var(--grey-900);
+        color: var(--grey-100);
+        padding: 0.35rem 1rem;
+      }
       .grocery-item {
       padding: 0.25rem 1rem;
       display: flex;
