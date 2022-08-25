@@ -32,7 +32,7 @@ const SearchContainer = () => {
 
   useEffect(() => {
     dispatch(fetchRecipes({ search, page }));
-  }, []);
+  }, [search, page]);
 
   return (
     <Wrapper className="search-container">

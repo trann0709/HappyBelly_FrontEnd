@@ -33,8 +33,8 @@ const allRecipesSlice = createSlice({
       state.page = 1;
       state[name] = value;
     },
-    clearInput: (state) => {
-      return { ...state, search: '' };
+    clearAllRecipes: (state) => {
+      return initialState;
     },
     changePage: (state, { payload }) => {
       state.page = payload;
@@ -59,4 +59,5 @@ const allRecipesSlice = createSlice({
 });
 
 export default allRecipesSlice.reducer;
-export const { handleChange, clearInput, changePage } = allRecipesSlice.actions;
+export const { handleChange, clearAllRecipes, changePage } =
+  allRecipesSlice.actions;

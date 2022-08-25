@@ -20,10 +20,6 @@ const RecipesContainer = () => {
   } = useSelector((store) => store.allRecipes);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchRecipes({ search, page }));
-  }, [page]);
-
   if (isLoading) {
     return <Loading />;
   }

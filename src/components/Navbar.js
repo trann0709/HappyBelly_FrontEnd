@@ -6,9 +6,10 @@ import Wrapper from '../wrappers/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser, toggleSidebar } from '../features/user/userSlice';
 import NavLinks from './NavLinks';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
-  const { isSidebarOpen, user } = useSelector((store) => store.user);
+  const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showLogout, setShowLogout] = useState(false);
@@ -17,7 +18,8 @@ const Navbar = () => {
     if (!user) {
       navigate('/register');
     } else {
-      dispatch(logoutUser('Logging out...'));
+      dispatch(logoutUser());
+      toast.success('Logging out');
     }
   };
 

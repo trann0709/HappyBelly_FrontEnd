@@ -1,6 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import customFetch, { checkForUnauthorizedResponse } from '../../utils/axios';
 import { toast } from 'react-toastify';
+import {
+  addFavoriteThunk,
+  fetchFavoriteThunk,
+  removeFavoriteThunk,
+} from './favoriteListThunk';
 
 const initialState = {
   isLoading: false,
@@ -15,49 +19,22 @@ const initialState = {
 
 export const fetchFavorite = createAsyncThunk(
   'favoriteList/fetchFavorite',
-  async ({ sort, page }, thunkAPI) => {
-    try {
-      const response = await customFetch.get(
-        `/favorite?sort=${sort}&page=${page}`
-      );
-      return response.data;
-    } catch (error) {
-      return checkForUnauthorizedResponse(error, thunkAPI);
-    }
+  ({ sort, page }, thunkAPI) => {
+    return fetchFavoriteThunk({ sort, page }, thunkAPI);
   }
 );
 
 export const addFavorite = createAsyncThunk(
   'favoriteList/addFavorite',
-  async (recipe, thunkAPI) => {
-    try {
-      const resp = await customFetch.post('/add_favorite', recipe);
-      // updating the list after adding a recipe
-      if (resp.status === 200) {
-        const { sort, page } = thunkAPI.getState().favoriteList;
-        thunkAPI.dispatch(fetchFavorite({ sort, page }));
-      }
-      return resp.data;
-    } catch (error) {
-      return checkForUnauthorizedResponse(error, thunkAPI);
-    }
+  (recipe, thunkAPI) => {
+    return addFavoriteThunk('/add_favorite', recipe, thunkAPI);
   }
 );
 
 export const removeFavorite = createAsyncThunk(
   'favoriteList/removeFavorite',
-  async (recipe_id, thunkAPI) => {
-    try {
-      const resp = await customFetch.delete(`/remove_favorite/${recipe_id}`);
-      // update favorite list after removing a recipe
-      if (resp.status === 200) {
-        const { sort, page } = thunkAPI.getState().favoriteList;
-        thunkAPI.dispatch(fetchFavorite({ sort, page }));
-      }
-      return resp.data;
-    } catch (error) {
-      return checkForUnauthorizedResponse(error, thunkAPI);
-    }
+  (recipe_id, thunkAPI) => {
+    return removeFavoriteThunk(recipe_id, thunkAPI);
   }
 );
 
@@ -71,6 +48,9 @@ const favoriteListSlice = createSlice({
     },
     changePage: (state, { payload }) => {
       state.page = payload;
+    },
+    clearFavoriteList: (state) => {
+      return initialState;
     },
   },
   extraReducers: {
@@ -105,7 +85,6 @@ const favoriteListSlice = createSlice({
     },
     [removeFavorite.fulfilled]: (state, { payload: { msg } }) => {
       state.isLoading = false;
-      // reset the page??
       state.page = 1;
       toast.success(msg);
     },
@@ -117,4 +96,5 @@ const favoriteListSlice = createSlice({
 });
 
 export default favoriteListSlice.reducer;
-export const { changePage, handleSort } = favoriteListSlice.actions;
+export const { changePage, handleSort, clearFavoriteList } =
+  favoriteListSlice.actions;

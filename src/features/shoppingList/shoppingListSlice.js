@@ -1,6 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import customFetch, { checkForUnauthorizedResponse } from '../../utils/axios';
 import { toast } from 'react-toastify';
+import {
+  addToListThunk,
+  deleteFromListThunk,
+  deleteListThunk,
+  fetchListThunk,
+} from './shoppingListThunk';
 
 const initialState = {
   isLoading: false,
@@ -10,62 +16,40 @@ const initialState = {
 
 export const addToList = createAsyncThunk(
   'shoppingList/addToList',
-  async (list, thunkAPI) => {
-    try {
-      const resp = await customFetch.post('/add_list', list);
-      // update the list
-      thunkAPI.dispatch(fetchList());
-      return resp.data;
-    } catch (error) {
-      return checkForUnauthorizedResponse(error, thunkAPI);
-    }
+  (list, thunkAPI) => {
+    return addToListThunk('/add_list', list, thunkAPI);
   }
 );
 
 export const deleteFromList = createAsyncThunk(
   'shoppingList/deleteFromList',
-  async (item, thunkAPI) => {
-    try {
-      const { id, ingredient } = item;
-      const resp = await customFetch.delete(
-        `/delete_item?id=${id}&ingredient=${ingredient}`
-      );
-      // update the list
-      thunkAPI.dispatch(fetchList());
-      return resp.data;
-    } catch (error) {
-      return checkForUnauthorizedResponse(error, thunkAPI);
-    }
+  (item, thunkAPI) => {
+    return deleteFromListThunk(item, thunkAPI);
   }
 );
 
 export const deleteList = createAsyncThunk(
   'shoppingList/deleteList',
-  async (thunkAPI) => {
-    try {
-      const resp = await customFetch.delete('/delete_list');
-      return resp.data;
-    } catch (error) {
-      return checkForUnauthorizedResponse(error, thunkAPI);
-    }
+  (thunkAPI) => {
+    return deleteListThunk('/delete_list', thunkAPI);
   }
 );
 
 export const fetchList = createAsyncThunk(
   'shoppingList/fetchList',
   async (thunkAPI) => {
-    try {
-      const resp = await customFetch.get('./fetch_list');
-      return resp.data;
-    } catch (error) {
-      return checkForUnauthorizedResponse(error, thunkAPI);
-    }
+    return fetchListThunk('./fetch_list', thunkAPI);
   }
 );
 
 const shoppingListSlice = createSlice({
   name: 'shoppingList',
   initialState,
+  reducers: {
+    clearShoppingList: (state) => {
+      return initialState;
+    },
+  },
   extraReducers: {
     [addToList.pending]: (state) => {
       state.isLoading = false;
@@ -119,3 +103,4 @@ const shoppingListSlice = createSlice({
 });
 
 export default shoppingListSlice.reducer;
+export const { clearShoppingList } = shoppingListSlice.actions;

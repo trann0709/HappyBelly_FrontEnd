@@ -148,7 +148,6 @@ const userSlice = createSlice({
       state.isSidebarOpen = false;
       removeUserFromLocalStorage();
       toast.success(payload);
-      // remove everything
     },
     [deleteUser.rejected]: (state, { payload }) => {
       state.isLoading = false;
