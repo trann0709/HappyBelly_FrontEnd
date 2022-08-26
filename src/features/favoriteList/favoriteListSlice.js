@@ -49,9 +49,7 @@ const favoriteListSlice = createSlice({
     changePage: (state, { payload }) => {
       state.page = payload;
     },
-    clearFavoriteList: (state) => {
-      return initialState;
-    },
+    clearFavoriteList: (state) => initialState,
   },
   extraReducers: {
     [fetchFavorite.pending]: (state) => {

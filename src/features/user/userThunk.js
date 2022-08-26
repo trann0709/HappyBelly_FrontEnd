@@ -1,7 +1,12 @@
 import { toast } from 'react-toastify';
 import customFetch, { checkForUnauthorizedResponse } from '../../utils/axios';
-import { fetchFavorite } from '../favoriteList/favoriteListSlice';
-import { logoutUser } from './userSlice';
+import {
+  clearFavoriteList,
+  fetchFavorite,
+} from '../favoriteList/favoriteListSlice';
+import { clearStore, logoutUser } from './userSlice';
+import { clearShoppingList } from '../shoppingList/shoppingListSlice';
+import { clearAllRecipes } from '../allRecipes/allRecipesSlice';
 
 export const registerUserThunk = async (url, user, thunkAPI) => {
   try {
@@ -58,17 +63,22 @@ export const logoutUserThunk = async (url, thunkAPI) => {
 export const deleteUserThunk = async (url, thunkAPI) => {
   try {
     const resp = await customFetch.delete(url);
+    thunkAPI.dispatch(clearStore());
     return resp.data;
   } catch (error) {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
 
-export const clearStoreThunk = async (thunkAPI) => {
+export const clearStoreThunk = async (message, thunkAPI) => {
   try {
     thunkAPI.dispatch(logoutUser());
+    thunkAPI.dispatch(clearShoppingList());
+    thunkAPI.dispatch(clearFavoriteList());
+    thunkAPI.dispatch(clearAllRecipes());
     return Promise.resolve();
   } catch (error) {
+    console.log(error);
     return Promise.reject();
   }
 };

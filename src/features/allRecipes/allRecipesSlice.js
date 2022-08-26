@@ -33,9 +33,7 @@ const allRecipesSlice = createSlice({
       state.page = 1;
       state[name] = value;
     },
-    clearAllRecipes: (state) => {
-      return initialState;
-    },
+    clearAllRecipes: (state) => initialState,
     changePage: (state, { payload }) => {
       state.page = payload;
     },
