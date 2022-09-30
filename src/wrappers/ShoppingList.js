@@ -7,6 +7,8 @@ const Wrapper = styled.section`
    
   .non-user {
     text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
     .link {
       color: var(--primary-200);
       &:hover {

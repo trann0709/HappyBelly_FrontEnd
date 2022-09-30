@@ -30,10 +30,6 @@ const Favorites = () => {
     }
   }, [sort, page]);
 
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
-
   const handleChange = (e) => {
     if (isLoading) {
       return;

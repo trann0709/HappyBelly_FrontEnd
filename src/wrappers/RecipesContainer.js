@@ -20,6 +20,7 @@ const Wrapper = styled.section`
   .user {
     .non-user {
       text-align: center;
+      margin-bottom: 2rem;
       .link {
       color: var(--primary-200);
       &:hover {

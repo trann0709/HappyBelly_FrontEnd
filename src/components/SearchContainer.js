@@ -3,7 +3,6 @@ import Wrapper from '../wrappers/SearchContainer';
 import {
   fetchRecipes,
   handleChange,
-  clearInput,
 } from '../features/allRecipes/allRecipesSlice';
 import { FiSearch } from 'react-icons/fi';
 import { useEffect } from 'react';
@@ -32,7 +31,7 @@ const SearchContainer = () => {
 
   useEffect(() => {
     dispatch(fetchRecipes({ search, page }));
-  }, [search, page]);
+  }, [page]);
 
   return (
     <Wrapper className="search-container">

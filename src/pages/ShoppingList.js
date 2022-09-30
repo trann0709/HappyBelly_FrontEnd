@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { FormRow, Loading } from '../components';
+import { Loading } from '../components';
 import { Link } from 'react-router-dom';
 import Wrapper from '../wrappers/ShoppingList';
-import { toast, ToastContainer } from 'react-toastify';
 import {
   addToList,
   deleteFromList,
@@ -43,6 +42,10 @@ const ShoppingList = () => {
     }
   }, []);
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <Wrapper className="section-center">
       {!user ? (
@@ -70,6 +73,7 @@ const ShoppingList = () => {
                 type="submit"
                 className="btn submit-btn"
                 onClick={handleSubmit}
+                disabled={isLoading}
               >
                 add
               </button>
