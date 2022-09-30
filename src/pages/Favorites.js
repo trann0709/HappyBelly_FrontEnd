@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { FormRowSelect, Loading, SingleRecipe } from '../components';
+import { FormRowSelect, SingleRecipe } from '../components';
 import { Link } from 'react-router-dom';
 import Wrapper from '../wrappers/RecipesContainer';
 import PageBtnContainer from '../components/PageBtnContainer';

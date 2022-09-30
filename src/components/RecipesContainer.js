@@ -1,24 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import SingleRecipe from './SingleRecipe';
 import Loading from './Loading';
 import Wrapper from '../wrappers/RecipesContainer';
 import PageBtnContainer from './PageBtnContainer';
-import { useEffect } from 'react';
-import {
-  fetchRecipes,
-  changePage,
-} from '../features/allRecipes/allRecipesSlice';
+import { changePage } from '../features/allRecipes/allRecipesSlice';
 
 const RecipesContainer = () => {
-  const {
-    allFetchedRecipes,
-    totalRecipes,
-    isLoading,
-    page,
-    search,
-    numOfPages,
-  } = useSelector((store) => store.allRecipes);
-  const dispatch = useDispatch();
+  const { allFetchedRecipes, totalRecipes, isLoading, page, numOfPages } =
+    useSelector((store) => store.allRecipes);
 
   if (isLoading) {
     return <Loading />;

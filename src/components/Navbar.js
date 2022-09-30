@@ -4,11 +4,7 @@ import logo from '../images/logo.svg';
 import { FaBars, FaCaretDown, FaUserCircle } from 'react-icons/fa';
 import Wrapper from '../wrappers/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  clearStore,
-  logoutUser,
-  toggleSidebar,
-} from '../features/user/userSlice';
+import { clearStore, toggleSidebar } from '../features/user/userSlice';
 import NavLinks from './NavLinks';
 import { toast } from 'react-toastify';
 
