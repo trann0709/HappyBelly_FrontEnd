@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { Loading } from '../components';
 import { addToList } from '../features/shoppingList/shoppingListSlice';
 import Wrapper from '../wrappers/RecipeInfo';
@@ -8,11 +9,20 @@ const RecipeInfo = () => {
   const { isLoading, recipeDetails } = useSelector(
     (store) => store.singleRecipe
   );
+  const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   if (isLoading) {
     return <Loading />;
   }
+
+  const addList = () => {
+    if (!user) {
+      toast.warning('Please log in to continue');
+      return;
+    }
+    dispatch(addToList({ id, name, ingredientList }));
+  };
 
   const { id, area, category, instructions, name, image, ingredientList } =
     recipeDetails;
@@ -35,11 +45,7 @@ const RecipeInfo = () => {
             {ingredientList.map((item, index) => {
               return <p key={index}>{item}</p>;
             })}
-            <button
-              type="button"
-              className="btn list-btn"
-              onClick={() => dispatch(addToList({ id, name, ingredientList }))}
-            >
+            <button type="button" className="btn list-btn" onClick={addList}>
               add to list
             </button>
           </div>
