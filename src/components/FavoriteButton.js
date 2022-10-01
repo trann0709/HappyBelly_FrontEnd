@@ -6,6 +6,7 @@ import {
   addFavorite,
   removeFavorite,
 } from '../features/favoriteList/favoriteListSlice';
+import { toast } from 'react-toastify';
 const FavoriteButton = ({ id, category, image, name }) => {
   const { user } = useSelector((store) => store.user);
   const { isLoading, idList } = useSelector((store) => store.favoriteList);
@@ -22,6 +23,8 @@ const FavoriteButton = ({ id, category, image, name }) => {
   const toggleFavorite = () => {
     if (!user) {
       navigate('/register');
+      toast.warning('Please log in to continue');
+      return;
     }
     setFavorite(!favorite);
     if (!favorite) {
