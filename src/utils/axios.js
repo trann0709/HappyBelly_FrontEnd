@@ -5,8 +5,7 @@ axios.defaults.xsrfCookieName = 'csrf_access_token';
 axios.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
 
 const customFetch = axios.create({
-  baseURL:
-    'http://happybellybackend-env.eba-aczdxmdw.us-east-2.elasticbeanstalk.com',
+  baseURL: 'https://api.lordfinn.link',
 });
 
 export const checkForUnauthorizedResponse = (error, thunkAPI) => {
